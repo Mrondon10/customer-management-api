@@ -57,14 +57,14 @@ graph TD
 
 | Campo | Tipo | Requerido | Notas |
 |-------|------|-----------|-------|
-| `firstName` | String | ✅ | |
-| `middleName` | String | ❌ | |
-| `lastName` | String | ✅ | |
-| `secondLastName` | String | ❌ | |
-| `email` | String | ✅ | Formato email, único |
-| `address` | String | ✅ | |
-| `phone` | String | ✅ | |
-| `country` | String | ✅ | Código ISO 3166 de 2 letras (ej: `US`, `CR`) |
+| `firstName` | String | SI | |
+| `middleName` | String | NO | |
+| `lastName` | String | SI | |
+| `secondLastName` | String | NO | |
+| `email` | String | SI | Formato email, único |
+| `address` | String | SI | |
+| `phone` | String | SI | |
+| `country` | String | SI | Código ISO 3166 de 2 letras (ej: `US`, `CR`) |
 
 ### Campos actualizables (`PATCH /customers/{id}`)
 
