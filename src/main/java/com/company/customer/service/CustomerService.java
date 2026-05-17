@@ -28,10 +28,10 @@ public class CustomerService {
     @Transactional
     public CustomerResponse create(CustomerRequest req) {
         repository.findByEmail(req.email).ifPresent(c -> {
-            throw new IllegalArgumentException("Email already in use: " + req.email);
+            throw new IllegalArgumentException("El correo ya esta en uso: " + req.email);
         });
 
-        String demonym = resolveDemonym(req.country.toUpperCase());
+        String demonym = getDemonym(req.country.toUpperCase());
 
         Customer customer = new Customer();
         customer.firstName = req.firstName;
@@ -65,14 +65,14 @@ public class CustomerService {
 
         if (!customer.email.equals(req.email)) {
             repository.findByEmail(req.email).ifPresent(c -> {
-                throw new IllegalArgumentException("Email already in use: " + req.email);
+                throw new IllegalArgumentException("El correo ya esta en uso: " + req.email);
             });
         }
 
-        String newCountry = req.country.toUpperCase();
-        if (!customer.country.equals(newCountry)) {
-            customer.demonym = resolveDemonym(newCountry);
-            customer.country = newCountry;
+        String pais = req.country.toUpperCase();
+        if (!customer.country.equals(pais)) {
+            customer.demonym = getDemonym(pais);
+            customer.country = pais;
         }
 
         customer.email = req.email;
@@ -85,23 +85,23 @@ public class CustomerService {
     @Transactional
     public void delete(Long id) {
         if (!repository.deleteById(id)) {
-            throw new NotFoundException("Customer not found with id: " + id);
+            throw new NotFoundException("Cliente no encontrado con id: " + id);
         }
     }
 
     private Customer getOrThrow(Long id) {
         return repository.findByIdOptional(id)
-                .orElseThrow(() -> new NotFoundException("Customer not found with id: " + id));
+                .orElseThrow(() -> new NotFoundException("Cliente no encontrado con id: " + id));
     }
 
-    private String resolveDemonym(String countryCode) {
+    private String getDemonym(String countryCode) {
         try {
             List<CountryResponse> result = countriesClient.getByCode(countryCode);
             if (result != null && !result.isEmpty()) {
                 return result.get(0).getDemonym();
             }
         } catch (Exception e) {
-            throw new IllegalArgumentException("Invalid or unknown country code: " + countryCode);
+            throw new IllegalArgumentException("Codigo de pais invalido o desconocido: " + countryCode);
         }
         return null;
     }
