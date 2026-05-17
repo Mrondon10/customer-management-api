@@ -21,7 +21,7 @@ public class ErrorHandler implements ExceptionMapper<Exception> {
             String message = cve.getConstraintViolations().stream()
                     .map(v -> {
                         String path = v.getPropertyPath().toString();
-                        // strip method/param prefix: create.request.email -> email
+                        // quitar el prefijo del path, create.request.email -> email
                         int dot = path.lastIndexOf('.');
                         return (dot >= 0 ? path.substring(dot + 1) : path) + ": " + v.getMessage();
                     })
@@ -31,7 +31,7 @@ public class ErrorHandler implements ExceptionMapper<Exception> {
         if (e instanceof IllegalArgumentException) {
             return error(Response.Status.CONFLICT, e.getMessage());
         }
-        return error(Response.Status.INTERNAL_SERVER_ERROR, "Unexpected error");
+        return error(Response.Status.INTERNAL_SERVER_ERROR, "Error inesperado");
     }
 
     private Response error(Response.Status status, String message) {

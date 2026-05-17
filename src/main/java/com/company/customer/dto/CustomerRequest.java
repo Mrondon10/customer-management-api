@@ -7,28 +7,28 @@ import jakarta.validation.constraints.Size;
 
 public class CustomerRequest {
 
-    @NotBlank(message = "First name is required")
+    @NotBlank(message = "El primer nombre es requerido")
     public String firstName;
 
     public String middleName;
 
-    @NotBlank(message = "Last name is required")
+    @NotBlank(message = "El primer apellido es requerido")
     public String lastName;
 
     public String secondLastName;
 
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email must be valid")
+    @NotBlank(message = "El correo es requerido")
+    @Email(message = "El correo no tiene un formato valido")
     public String email;
 
-    @NotBlank(message = "Address is required")
+    @NotBlank(message = "La direccion es requerida")
     public String address;
 
-    @NotBlank(message = "Phone is required")
+    @NotBlank(message = "el telefono es requerido")
     public String phone;
 
-    @NotBlank(message = "Country is required")
-    @Size(min = 2, max = 2, message = "Country must be a 2-character ISO 3166 code")
-    @Pattern(regexp = "[A-Za-z]{2}", message = "Country must contain only letters")
+    @NotBlank(message = "El pais es requerido")
+    @Size(min = 2, max = 2, message = "El pais debe ser un codigo ISO 3166 de 2 letras")
+    @Pattern(regexp = "[A-Za-z]{2}", message = "El pais debe contener solo letras")
     public String country;
 }
